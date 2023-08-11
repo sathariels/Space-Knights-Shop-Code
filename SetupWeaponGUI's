@@ -1,0 +1,110 @@
+
+
+local function SetupWeaponGuis()
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local RemoteEvent = ReplicatedStorage:WaitForChild("BuyTool")
+	local Create = require(ReplicatedStorage:WaitForChild("Create"))
+
+	local CreateWeaponUI =require(ReplicatedStorage:WaitForChild("SharedWeaponData").WeaponShared)
+	--local CreateWeaponGui = require(ReplicatedStorage:WaitForChild("SharedWeaponData").RarityGuiCreator)
+	local RarityData = require(ReplicatedStorage:WaitForChild("SharedData").RarityData)
+	local Weapons = require(ReplicatedStorage:WaitForChild("SharedData").WeaponData)
+
+
+	local visibilityFrames = {}
+	for index, rarity in pairs(Weapons:GetWeaponRarityTable()) do
+		local weaponGui = CreateWeaponUI.CreateWeaponGui(index, rarity)
+		table.insert(visibilityFrames, weaponGui)
+
+	end -- Call the CreateWeaponGui function from the module script to get the table
+	print(visibilityFrames)
+
+	CreateWeaponUI.AllWeaponGui()
+	CreateWeaponUI.Filter()
+
+	for i, weaponData in ipairs(Weapons.Weapons) do
+		local frame
+		local thing = true
+		local rarityFrames
+		for _, entry in ipairs(visibilityFrames) do
+			if entry.rarity == weaponData.Rarity then
+				frame = entry.frame
+				rarityFrames = entry.rarityframes
+				break
+			end
+		end
+
+
+		if frame and rarityFrames then
+			if thing == true then
+				local AllWeaponUI = CreateWeaponUI.CreateWeaponUI(weaponData.Name, weaponData.ImageId, weaponData.Description, weaponData.Coin)
+				AllWeaponUI.Parent = LocalPlayer.PlayerGui:WaitForChild("AllWeaponGui"):WaitForChild("AllWeaponFrame")
+				LocalPlayer.PlayerGui:WaitForChild("AllWeaponGui"):WaitForChild("AllWeaponFrame").Visible = true
+				thing = false
+
+			end
+
+			if weaponData.Sale ~= 0 then
+				weaponData.Coin = math.round(weaponData.Coin * (1-weaponData.Sale))
+				local weaponUI = CreateWeaponUI.CreateWeaponUI(weaponData.Name, weaponData.ImageId, weaponData.Description, weaponData.Coin)
+				weaponUI.Parent = LocalPlayer.PlayerGui:WaitForChild(frame):WaitForChild(rarityFrames)
+				weaponUI.ZIndex = 1
+				weaponUI.BorderSizePixel = 0
+				print("Nice")
+
+
+				print(weaponData.Coin.." ".."hdfioahsdjfasdf")
+				local saleIcon = Create.new "TextButton"{
+					Parent = weaponUI;
+					Size = UDim2.new(.597,0,.4,0);
+					Position = UDim2.new(.3,0,2,0) ;
+					BackgroundColor3 = Color3.new(1, 1, 0);
+					Text = (weaponData.Sale*100).."%".."Off"
+				}
+			end
+
+			if weaponData.Sale == 0 then
+				local weaponUI = CreateWeaponUI.CreateWeaponUI(weaponData.Name, weaponData.ImageId, weaponData.Description, weaponData.Coin)
+				weaponUI.Parent = LocalPlayer.PlayerGui:WaitForChild(frame):WaitForChild(rarityFrames)
+				weaponUI.ZIndex = 1
+				weaponUI.BorderSizePixel = 0
+				LocalPlayer.PlayerGui:WaitForChild(frame):WaitForChild(rarityFrames).Visible = false
+
+				print("Weapon Name: " .. weaponData.Name)
+				print("Image ID: " .. weaponData.ImageId)
+
+				print("Coin: " .. weaponData.Coin)
+
+				local uiGridLayout = Create.new "UIGridLayout"{
+					CellSize = UDim2.new(.2,0,.05,0);
+					CellPadding = UDim2.new(.01,0,.15,0);
+					Parent = LocalPlayer.PlayerGui:WaitForChild(frame):WaitForChild(rarityFrames)
+				}
+				local uiGridLayout = Create.new "UIGridLayout"{
+					CellSize = UDim2.new(.2,0,.05,0);
+					CellPadding = UDim2.new(.01,0,.15,0);
+					Parent =LocalPlayer.PlayerGui:WaitForChild("AllWeaponGui"):WaitForChild("AllWeaponFrame")
+				}
+
+				warn("No frame found for weapon rarity:", weaponData.Rarity)
+			end
+		end
+	end
+
+
+
+	-- Toggle the visibility of the frames based on the sorted order
+	--[[local isVisible = false
+
+	for _, entry in ipairs(visibilityFrames) do
+		
+		entry.frame.Visible = isVisible
+		isVisible = not isVisible
+	end]]--
+end
+
+return SetupWeaponGuis
