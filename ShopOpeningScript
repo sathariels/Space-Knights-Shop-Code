@@ -1,0 +1,21 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+---local HomeScreen = LocalPlayer.PlayerGui:WaitForChild("HomeScreen")
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--local BaseShopFrame = HomeScreen:WaitForChild("BaseShopFrame")
+local WeaponHomepage = require(ReplicatedStorage:WaitForChild("SharedWeaponData").WeaponHomePage)
+local CreateWeaponUI = require(ReplicatedStorage:WaitForChild("SharedWeaponData").WeaponShared)
+local ScreenGui = script.Parent
+
+local OpenShop = ScreenGui.OpenShop
+
+local function OpenShops()
+	--BaseShopFrame.Visible = not BaseShopFrame.Visible
+
+	WeaponHomepage()
+	CreateWeaponUI.ShowExitButton()
+end
+
+OpenShop.MouseButton1Up:Connect(OpenShops)
