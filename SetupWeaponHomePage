@@ -1,0 +1,96 @@
+--!strict
+
+
+local function WeaponHomepage()
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local RemoteEvent = ReplicatedStorage:WaitForChild("BuyTool")
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local SetupWeaponGuis = require(ReplicatedStorage:WaitForChild("SharedWeaponData").SetupWeaponGuis)
+
+
+	local Create = require(ReplicatedStorage:WaitForChild("Create"))
+	local weaponHomePageGui = Create.new "ScreenGui"{
+		Name = "WeaponHomePageGui";
+		Parent = LocalPlayer.PlayerGui;
+	}
+	local searchBoxGui = Create.new "ScreenGui"{
+		Name = "SearchBoxGui";
+		Parent = LocalPlayer.PlayerGui
+	}
+	
+	local homeShopFrame = Create.new "ScrollingFrame"{
+		Parent = weaponHomePageGui;
+		Size = UDim2.new(.85,0,.45,0);
+		Position = UDim2.new(.075,0,.272,0);
+		BackgroundColor3 = Color3.new(0.203922, 0.00392157, 0.32549);
+		Transparency = .6
+	}
+	
+	local backgroundFrame = Create.new "Frame"{
+		Name = "Background Frame";
+		Size = UDim2.new(.168,0,.45,0);
+		Position = UDim2.new(.075,0,.271,0);
+		BackgroundColor3 = Color3.new(1, 1, 1);
+		Parent = weaponHomePageGui;
+		Transparency = .3
+	}
+	local uiListLayout = Create.new "UIListLayout"{
+		Parent = backgroundFrame;
+		Padding = UDim.new(.24,0);
+	}
+	
+	local function CreateTextButton(text)
+		local button = Create.new "TextButton"{
+			Parent = backgroundFrame;
+			Size = UDim2.new(.997,0,.174,0);
+			Text = text;
+			TextColor3 = Color3.new(1, 1, 1);
+			BackgroundColor3 = Color3.new(0.705882, 0.494118, 1);
+			TextScaled = true;
+			Name = "1"..text;
+			Transparency = 0;
+			BorderSizePixel = 0;
+		}
+
+		
+
+		return button
+	end
+	local corner = Create.new "UICorner"{
+		Parent = backgroundFrame;
+		CornerRadius = UDim.new(0,25)
+	}
+	local Something2 = CreateTextButton("Button 3")
+
+	local Weapons = CreateTextButton("Weapons")
+	
+	Weapons.MouseButton1Click:Connect(function()
+		LocalPlayer.PlayerGui:WaitForChild("WeaponHomePageGui"):WaitForChild("ScrollingFrame").Visible = false
+		SetupWeaponGuis()
+		
+
+	end)
+
+	-- Create Button 2
+	local Something1 = CreateTextButton("Button 2")
+	
+	
+	
+	local searchBox = Create.new "TextBox"{
+		Parent = searchBoxGui;
+		Size = UDim2.new(.365,0,.062,0);
+		Position = UDim2.new(.559,0,.206,0);
+		BackgroundColor3 = Color3.new(0.329412, 0, 0.494118);
+		TextScaled = true;
+		TextColor3 = Color3.new(1,1,1);
+		Text = "Search";
+		Name = "SearchBox"
+		
+	}
+	
+	
+	
+end
+
+return WeaponHomepage
