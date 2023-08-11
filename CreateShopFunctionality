@@ -1,0 +1,513 @@
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RemoteEvent = ReplicatedStorage:WaitForChild("BuyTool")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Create = require(ReplicatedStorage:WaitForChild("Create"))
+local WeaponData = require(ReplicatedStorage:WaitForChild("SharedData"):WaitForChild("WeaponData"))
+local CreateWeaponUI = {}
+
+function CreateWeaponUI.CreateWeaponUI(Name:string, ImageId:string, Description:string, Coin:number, frame, rarity:string, rarityframes:string, Sale:number, Type:string)
+	local frameCount = 0
+	frameCount = frameCount + 1
+	local frameWidth = ImageId
+
+
+	--[[local weaponUI = Instance.new("Frame")
+	weaponUI.Size = UDim2.new(0, 220, 0, 240)
+	weaponUI.BackgroundColor3 = Color3.new(1, 1, 1)
+	weaponUI.BorderSizePixel = 4
+	weaponUI.Name = "Frame" .. FrameCount]]--
+
+	local weaponUI = Create.new "Frame"{
+		Name = Name;
+		BackgroundColor3 = Color3.new(1,1,1);
+		BorderSizePixel = 0;
+		Size = UDim2.new(0, 220, 0, 240);
+		Transparency = 1;
+		ZIndex = 3;
+		
+	}
+	
+	local weaponBackgroundFrame = Create.new "Frame"{
+		Name = "BackgroundFrame"..frameCount;
+		BackgroundColor3 = Color3.new(1, 1, 1);
+		BorderSizePixel = 0;
+		
+		Parent = weaponUI;
+		Size = UDim2.new(.971,0,3.61,0);
+		Position = UDim2.new(.11,0,.2,0);
+		Transparency = .4;
+		
+	}
+
+	--[[local imageLabel = Instance.new("ImageLabel")
+	imageLabel.Name = "LogoImage" .. FrameCount
+	imageLabel.Parent = weaponUI
+	imageLabel.Size = UDim2.new(.85, 0, 1.7, 0)
+	imageLabel.Position = UDim2.new(.2, 0, 0.6, 0)
+	imageLabel.Image = imageId]]--
+	local imageLabel = Create.new "ImageLabel"{
+		
+		
+		Name = "LogoImage"..frameCount;
+		Parent = weaponBackgroundFrame;
+		Size = UDim2.new(.65, 0, 1.7, 0);
+		Position = UDim2.new(.175, 0, 0.08, 0);
+		Image = ImageId;
+		ZIndex = 3;
+		BackgroundColor3 = Color3.new(1,1,1);
+		BackgroundTransparency = 1
+	}
+
+	--[[local nameLabel = Instance.new("TextBox")
+	nameLabel.Parent = weaponUI
+	nameLabel.Size = UDim2.new(1, 0, .25, 0)
+	nameLabel.Position = UDim2.new(.15, 0, 2.5, 0)
+	nameLabel.Text = name
+	nameLabel.BackgroundTransparency = 1
+	nameLabel.TextSize = 25
+	nameLabel.TextColor3 = Color3.new(0, 0, 0)
+	nameLabel.TextScaled = true
+	nameLabel.Name = "Name"..FrameCount]]--
+
+	local nameLabel = Create.new "TextBox"{
+		Parent = weaponUI;
+		Size = UDim2.new(1, 0, .37, 0);
+		Position = UDim2.new(.11, 0, 2.0, 0);
+		Text = Name;
+		BackgroundTransparency = 1;
+		TextSize = 25;
+		TextColor3 = Color3.new(0,0,0);
+		TextScaled = true;
+		Name = "Name"..frameCount;
+		ZIndex = 3;
+	}
+
+
+
+	--[[local priceLabel = Instance.new("TextBox")
+	priceLabel.Name = "PriceLabel"
+	priceLabel.Parent = weaponUI
+	priceLabel.Size = UDim2.new(1, 0, .2, 0)
+	priceLabel.Position = UDim2.new(.15, 0, 2.9, 0)
+	priceLabel.Text = tostring(coin)
+	priceLabel.BackgroundTransparency = 1
+	priceLabel.TextSize = 25
+	priceLabel.TextColor3 = Color3.new(0, 0, 0)
+	priceLabel.TextScaled = true
+	priceLabel.ZIndex = 2
+	priceLabel.Name = "Price"..FrameCount]]--
+
+	
+
+
+
+	--[[local backroundPriceLabel = Instance.new("Frame")
+	backroundPriceLabel.Parent = weaponUI
+	backroundPriceLabel.Size = UDim2.new(.95, 0, .5, 0)
+	backroundPriceLabel.Position = UDim2.new(.15, 0, 2.8, 0)
+	backroundPriceLabel.BackgroundColor3 = Color3.new(0, 0.666667, 0.498039)
+	backroundPriceLabel.Name = "backroundPriceLabel"..FrameCount]]--
+
+
+	--[[local descriptionLabel = Instance.new("TextButton")
+	descriptionLabel.Parent = weaponUI
+	descriptionLabel.Size = UDim2.new(.9, 0, 0.5, 0)
+	descriptionLabel.Position = UDim2.new(.18, 0, 3.4, 0)
+	descriptionLabel.Text = tostring(description)  -- Set default value if description is nil
+	descriptionLabel.BackgroundTransparency = 0
+	descriptionLabel.TextSize = 14
+	descriptionLabel.BackgroundColor3 = Color3.new(0, 0.666667, 0)
+	descriptionLabel.TextScaled = true
+	descriptionLabel.Name = "description"..FrameCount
+	]]--
+	
+	local descriptionLabel = Create.new "TextButton"{
+		Parent = weaponUI;
+		Size = UDim2.new(.8, 0, 0.6, 0);
+		Position = UDim2.new(.188, 0, 2.8, 0);
+		Text = tostring(Coin).." SpaceBucks";
+		BackgroundTransparency = 0;
+		TextSize = 12;
+		BackgroundColor3 = Color3.new(0.258824, 0.0392157, 0.478431);
+		TextScaled = true;
+		Name = "description"..frameCount;
+		ZIndex = 3;
+		TextColor3 = Color3.new(1, 1, 1);
+		
+
+
+	}
+
+
+	--[[local roundingCorner = Instance.new("UICorner")
+	roundingCorner.Parent = descriptionLabel
+	roundingCorner.CornerRadius = UDim.new(1, 3)]]--
+	local roundingCorner = Create.new "UICorner"{
+		Parent = descriptionLabel;
+		CornerRadius = UDim.new(1, 3);
+
+	}
+
+	--[[local uiAspectRatio = Instance.new("UIAspectRatioConstraint")
+	uiAspectRatio.Parent = imageLabel
+	uiAspectRatio.AspectRatio = 1]]--
+	local uiAspectRation = Create.new "UIAspectRatioConstraint"{
+		Parent = imageLabel;
+		AspectRatio = 1;
+	}
+
+
+	--[[local uiGridLayout = Instance.new("UIGridLayout")
+	uiGridLayout.CellSize = UDim2.new(.2,0,.05,0)
+	uiGridLayout.CellPadding = UDim2.new(.1,0,.15,0)
+	uiGridLayout.Parent = frame]]--
+	
+	
+	
+	
+	local keyWordsFolder = Create.new "Folder"{
+		Parent = weaponUI;
+		Name = "KeyWordsFolder"
+
+	}
+	
+	print(WeaponData.Weapons)
+
+
+	
+	local uiAspectRatio = Create.new "UIAspectRatioConstraint"{
+		Parent  = weaponUI;
+		AspectRatio = 2;
+	}
+
+
+
+
+	local function BuyTool()
+		local tool = ReplicatedStorage:FindFirstChild(Name)
+		if tool then
+			RemoteEvent:FireServer(tool)
+		else
+			warn("Tool not found:", Name)
+		end
+	end
+
+	local function OwnsWeapon(weaponName)
+		local playerInventory = LocalPlayer.Backpack
+		return playerInventory:FindFirstChild(weaponName) ~= nil
+	end
+
+	local clickConnection
+	local function UpdateButtonStatus()
+		if OwnsWeapon(Name) then
+			descriptionLabel.Text = "Owned"
+			descriptionLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+			descriptionLabel.AutoButtonColor = false
+			if clickConnection then
+				clickConnection:Disconnect()
+				local clickConnection = nil
+			end
+		else
+			if clickConnection then
+				clickConnection:Disconnect()
+			end
+			clickConnection = descriptionLabel.MouseButton1Click:Connect(BuyTool)
+		end
+	end
+
+	UpdateButtonStatus()
+
+	local playerInventory = LocalPlayer:WaitForChild("Backpack")
+	playerInventory.ChildAdded:Connect(UpdateButtonStatus)
+	playerInventory.ChildRemoved:Connect(UpdateButtonStatus)
+
+	return weaponUI
+end
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Create = require(ReplicatedStorage:WaitForChild("Create"))
+--local RarityData = require(ReplicatedStorage:WaitForChild("SharedData").RarityData)
+local rarityFrames = {}
+
+function CreateWeaponUI.CreateWeaponGui( rarityOrder, rarity:string)
+	local weaponGui = Create.new "ScreenGui"{
+		Name = tostring(rarity).."Gui";
+		Parent = game.Players.LocalPlayer.PlayerGui;
+	}
+
+	local weaponFrame = Create.new "ScrollingFrame"{
+		Parent = weaponGui;
+		Position = UDim2.new(0.243, 0, 0.273, 0);
+		Size = UDim2.new(0.682, 0, 0.45, 0);
+		ZIndex = 3;
+		BackgroundTransparency = .6;
+		Name = rarity.."Frame";
+		BackgroundColor3 = Color3.new(0.203922, 0.00392157, 0.32549);
+		BorderSizePixel = 2;
+	}
+	rarityFrames[rarity] = weaponFrame 
+	return { frame = rarity.."Gui", rarity = rarity, rarityframes = rarity.."Frame"}
+	
+	
+
+end
+--[[local visibilityFrames = {}
+for index, rarity in pairs(RarityData.Rarity) do
+	local weaponGui = CreateWeaponGui(index, rarity)
+	table.insert(visibilityFrames, weaponGui)
+
+end]]--
+
+function CreateWeaponUI.AllWeaponGui()
+
+	local AllWeapongui = Create.new "ScreenGui"{
+		Name = "AllWeaponGui";
+		Parent = game.Players.LocalPlayer.PlayerGui;
+
+
+	}
+	local AllWeaponFrame = Create.new "ScrollingFrame"{
+		Parent = AllWeapongui;
+		Position = UDim2.new(0.243, 0, 0.273, 0);
+		Size = UDim2.new(0.682, 0, 0.45, 0);
+		ZIndex = 3;
+		BackgroundTransparency = 1;
+		Name = "AllWeaponFrame";
+		BackgroundColor3 = Color3.new(0.203922, 0.00392157, 0.32549);
+		Transparency = 1
+	}
+	
+end
+
+function CreateWeaponUI.Filter()
+	local filterGui = Create.new "ScreenGui"{
+		Name = "FilterGui";
+		Parent = game.Players.LocalPlayer.PlayerGui;
+		
+	}
+	local dropDown = Create.new "TextButton"{
+		
+		Position = UDim2.new(.83,0,.309,0);
+		Size = UDim2.new(.08,0,.043,0);
+		Parent = filterGui;
+		ZIndex = 6;
+		BackgroundColor3 = Color3.new(0.294118, 0.0901961, 0.545098);
+		Name = "dropDown";
+		TextScaled = true;
+		TextColor3 = Color3.new(1,1,1);
+		Text = "Filter";
+		Font = Enum.Font.RobotoMono
+		
+	}
+	local UiCorner = Create.new "UICorner"{
+		CornerRadius = UDim.new(2,0);
+		Parent = dropDown
+	}
+	local BackgroundFrameFiler = Create.new "Frame"{
+		Parent = dropDown;
+		Size = UDim2.new(1, 0,.03, 0);
+		Position = UDim2.new(0, 0,.97, 0);
+		Transparency = .6;
+		BackgroundColor3 = Color3.new(0.266667, 0, 0.4);
+		Name = "menu";
+		Visible = false
+		
+		
+	}
+	local UIListLayout = Create.new "UIListLayout"{
+		Parent = BackgroundFrameFiler;
+		VerticalAlignment = Enum.VerticalAlignment.Bottom;
+		Padding = UDim.new(.35,0);
+	}
+	local function CreateWeaponButtons(name)
+		local WeaponButtons = Instance.new("TextButton")
+		WeaponButtons.Parent = BackgroundFrameFiler
+		WeaponButtons.Size = UDim2.new(1, 0, -.118, 0)
+		WeaponButtons.BackgroundColor3 = Color3.new(0.498039, 0, 0.745098)
+		WeaponButtons.Name = name
+		WeaponButtons.TextScaled = true
+		WeaponButtons.Text = name;
+		WeaponButtons.TextColor3 = Color3.new(1, 1, 1);
+
+		-- Add event handler for the MouseButton1Click event
+		WeaponButtons.MouseButton1Click:Connect(function()
+			-- Iterate over the rarity frames
+			for rarity, frame in pairs(rarityFrames) do
+				if rarity == name then
+					-- Show the selected rarity frame
+					frame.Visible = true
+				else
+					-- Hide other rarity frames
+					frame.Visible = false
+					LocalPlayer.PlayerGui:WaitForChild("AllWeaponGui"):WaitForChild("AllWeaponFrame").Visible = false
+					LocalPlayer.PlayerGui:WaitForChild("WeaponHomePageGui"):WaitForChild("ScrollingFrame").Visible = false
+				end
+			end
+			
+				CreateWeaponUI.searchBar()
+			
+		end)
+	end
+	
+
+	CreateWeaponButtons("Common")
+	CreateWeaponButtons("Rare")
+	CreateWeaponButtons("Epic")
+	CreateWeaponButtons("Legendary")
+	CreateWeaponButtons("Mythical")
+
+	
+	
+	local TweenService = game:GetService("TweenService")
+		
+	local tweenInfo = TweenInfo.new(
+		.3,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out,
+		0,
+		false,
+		0
+		
+			
+	)
+		
+	local open = false
+		
+	local OpenTween = TweenService:Create(LocalPlayer.PlayerGui:WaitForChild("FilterGui"):WaitForChild("dropDown"):WaitForChild("menu"), tweenInfo,{Size = UDim2.new(1, 0,7.485, 0)})
+		
+	local CloseTween = TweenService:Create(LocalPlayer.PlayerGui:WaitForChild("FilterGui"):WaitForChild("dropDown"):WaitForChild("menu"), tweenInfo,{Size = UDim2.new(1, 0,.3, 0)})
+	dropDown.MouseButton1Click:Connect(function()
+		if not open then
+			OpenTween:Play()
+			open = true
+			LocalPlayer.PlayerGui:WaitForChild("FilterGui"):WaitForChild("dropDown"):WaitForChild("menu").Visible = true
+		else
+			CloseTween:Play()
+			open = false
+			task.wait(0.3)
+			LocalPlayer.PlayerGui:WaitForChild("FilterGui"):WaitForChild("dropDown"):WaitForChild("menu").Visible = false
+		end
+
+	end)	
+	
+
+
+end
+local function LevDistance(string1, string2)
+	local len1,len2 = #string1, #string2--
+	local dp = {}
+
+	for i = 0, len1 do
+		dp[i] = {}
+		for j = 0, len2 do 
+			dp[i][j] = 0
+		end
+	end
+
+	for i = 0, len1 do 
+		dp[i][0] = i
+
+	end
+	for j = 0, len2 do 
+		dp[0][j] = j
+	end
+	for i = 1, len1 do
+		for j = 1, len2 do
+			local cost = (string1:sub(i, i) ~= string2:sub(j, j)) and 1 or 0
+			dp[i][j] = math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
+			
+		end
+	end
+
+
+	return dp[len1][len2]
+end
+
+
+function CreateWeaponUI.searchBar()
+	local SearchBox = LocalPlayer.PlayerGui:WaitForChild("SearchBoxGui"):WaitForChild("SearchBox")
+
+	SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local text = string.lower(SearchBox.Text)
+
+		if text:match("^%s*$") then
+			for rarity, frame in pairs(rarityFrames) do
+				for _, item in pairs(frame:GetChildren()) do
+					if item:IsA("Frame") then
+						item.Visible = true
+					end
+				end
+			end
+			return
+		end
+
+		local anyVisible = false
+		local threshold = 2
+
+		for rarity, frame in pairs(rarityFrames) do
+			for _, item in pairs(frame:GetChildren()) do
+				if item:IsA("Frame") then
+					local madeVisible = false
+
+					local frameName = string.lower(item.Name)
+					local nameDistance = LevDistance(frameName, text)
+					if nameDistance <= threshold then
+						madeVisible = true
+					else
+						for _, keyword in pairs(item.KeyWordsFolder:GetChildren()) do
+							local keywordValue = string.lower(keyword.Value)
+							local keywordDistance = LevDistance(keywordValue, text)
+							if keywordDistance <= threshold then
+								madeVisible = true
+								break
+							end
+						end
+					end
+
+					if madeVisible then
+						item.Visible = true
+						anyVisible = true
+					else
+						item.Visible = false
+					end
+				end
+			end
+		end
+
+		
+	end)
+end
+
+function CreateWeaponUI.HideWeaponUI()
+	for rarity, frame in pairs(rarityFrames) do
+		frame.Visible = false
+	end
+	LocalPlayer.PlayerGui:WaitForChild("AllWeaponGui"):WaitForChild("AllWeaponFrame").Visible = false
+	LocalPlayer.PlayerGui:WaitForChild("WeaponHomePageGui"):WaitForChild("ScrollingFrame").Visible = false
+end
+
+-- Function to show the exit button
+function CreateWeaponUI.ShowExitButton()
+	local exitButton = Instance.new("TextButton")
+	exitButton.Parent = LocalPlayer.PlayerGui
+	exitButton.Position = UDim2.new(.074,0,.793,0)
+	exitButton.Size = UDim2.new(.221,0,.064,0)
+	exitButton.BackgroundColor3 = Color3.new(0.8, 0.1, 0.1)
+	exitButton.Text = "Exit"
+	exitButton.TextColor3 = Color3.new(1, 1, 1)
+	exitButton.Font = Enum.Font.SourceSansBold
+	exitButton.TextSize = 18
+
+	-- Connect a function to the MouseButton1Click event to hide all weapon UI elements
+	exitButton.MouseButton1Click:Connect(CreateWeaponUI.HideWeaponUI)
+end
+
+
+
+
+
+return CreateWeaponUI
